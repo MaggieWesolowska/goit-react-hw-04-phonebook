@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
@@ -22,20 +22,23 @@ export const App = () => {
     localStorage.setItem('contactList', JSON.stringify(contacts));
   }, [contacts]);
 
-  const handleFilter = e => {
+  const handleChange = e => {
     const { value } = e.target;
     setFilter(value);
   };
 
-  const addContact = newContact => {
-    const existingContact = contacts.find(
-      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
-    );
-    if (existingContact) {
-      return `Contact with name ${newContact.name} already exists!`;
-    }
+  const handleSubmit = e => {
+    const id = nanoid();
+    const name = e.name;
+    const number = e.number;
+    const contactList = [...contacts];
 
-    setContacts(prevContacts => [...prevContacts, newContact]);
+    if (contactList.findIndex(contact => name === contact.name) !== -1) {
+      alert(`${name} is already in contacts.`);
+    } else {
+      contactList.push({ name, id, number });
+    }
+    setContacts(contactList);
   };
 
   const handleDelete = e => {
@@ -65,9 +68,9 @@ export const App = () => {
       }}
     >
       <h1 className={css.header}>Phonebook</h1>
-      <ContactForm contacts={contacts} addContact={addContact} />
+      <ContactForm contacts={contacts} handleSubmit={handleSubmit} />
       <h2 className={css.contacts}>Contacts</h2>
-      <Filter filter={filter} handleChange={handleFilter} />
+      <Filter filter={filter} handleChange={handleChange} />
       <ContactList contacts={getFilteredContacts} handleDelete={handleDelete} />
     </div>
   );
