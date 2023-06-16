@@ -2,14 +2,14 @@ import { useState } from 'react';
 import propTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
-export function ContactForm({ handleSubmit }) {
+export const ContactForm = ({ handleSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleNameChange = e => {
     const { value } = e.target;
     setName(value);
-    // setName(e.target.value);
+    // setName(e.target.value); // also good
   };
 
   const handleNumberChange = e => {
@@ -52,7 +52,7 @@ export function ContactForm({ handleSubmit }) {
       </button>
     </form>
   );
-}
+};
 
 ContactForm.propTypes = {
   handleSubmit: propTypes.func.isRequired,
