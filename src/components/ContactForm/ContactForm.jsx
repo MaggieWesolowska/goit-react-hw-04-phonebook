@@ -1,38 +1,30 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import propTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
-export function ContactForm({ addContact }) {
+export function ContactForm({ handleSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleNameChange = e => {
-    setName(e.target.value);
+    const { value } = e.target;
+    setName(value);
+    // setName(e.target.value);
   };
 
   const handleNumberChange = e => {
     setNumber(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleFormSubmit = e => {
     e.preventDefault();
-    if (name.trim() === '' || number.trim() === '') {
-      return;
-    }
-
-    const newContact = {
-      id: nanoid(),
-      name: name.trim(),
-      number: number.trim(),
-    };
-    addContact(newContact);
-    setName('');
-    setNumber('');
+    const form = e.currentTarget;
+    handleSubmit({ name: name, number: number });
+    form.reset();
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit}>
+    <form className={css.form} onSubmit={handleFormSubmit}>
       <label className={css.formLabel}>Name </label>
       <input
         type="text"
@@ -63,5 +55,5 @@ export function ContactForm({ addContact }) {
 }
 
 ContactForm.propTypes = {
-  addContact: propTypes.func,
+  handleSubmit: propTypes.func.isRequired,
 };
