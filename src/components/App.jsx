@@ -67,8 +67,8 @@ export const App = () => {
         borderRadius: 5,
       }}
     >
-      <h1 className={css.header}>Phonebook</h1>
-      <ContactForm contacts={contacts} handleSubmit={handleSubmit} />
+      <h1 className={css.header}>Phonebook📱</h1>
+      <ContactForm handleSubmit={handleSubmit} />
       <h2 className={css.contacts}>Contacts</h2>
       <Filter filter={filter} handleChange={handleChange} />
       <ContactList contacts={getFilteredContacts} handleDelete={handleDelete} />
