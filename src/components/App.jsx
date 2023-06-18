@@ -14,15 +14,6 @@ export const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
 
-  // const load = key => {
-  //   try {
-  //     const serializedState = localStorage.getItem(key);
-  //     return serializedState === null ? undefined : JSON.parse(serializedState);
-  //   } catch (error) {
-  //     console.error('Get state error: ', error.message);
-  //   }
-  // };
-
   useEffect(() => {
     if (localStorage === null) {
       localStorage.setItem('contactList', JSON.stringify(contacts));
@@ -63,7 +54,7 @@ export const App = () => {
     const filteredContactList = contacts.filter(contact => {
       return contact.name.toLowerCase().includes(filter.toLowerCase());
     });
-    return filteredContactList;
+    return filteredContactList();
   };
 
   return (
@@ -84,10 +75,7 @@ export const App = () => {
       <ContactForm handleSubmit={handleSubmit} />
       <h2 className={css.contacts}>Contacts</h2>
       <Filter filter={filter} handleChange={handleChange} />
-      <ContactList
-        contacts={getFilteredContacts()}
-        handleDelete={handleDelete}
-      />
+      <ContactList contacts={getFilteredContacts} handleDelete={handleDelete} />
     </div>
   );
 };
