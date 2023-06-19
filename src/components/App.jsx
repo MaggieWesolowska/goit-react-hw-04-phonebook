@@ -15,17 +15,15 @@ export const App = () => {
   ]);
 
   useEffect(() => {
-    if (localStorage === null) {
-      localStorage.setItem('contactList', JSON.stringify(contacts));
-    } else {
-      setContacts(
-        localStorage.getItem(
-          'contactList',
-          JSON.parse(localStorage.getItem('contactList', contacts))
-        )
-      );
+    const lsData = localStorage.getItem('contactList');
+    if (lsData) {
+      setContacts(JSON.parse(lsData));
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contactList', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleChange = e => {
     const { value } = e.target;
