@@ -20,7 +20,8 @@ export const ContactForm = ({ handleSubmit }) => {
     e.preventDefault();
     const form = e.currentTarget;
     handleSubmit({ name: name, number: number });
-    form.reset();
+    setName('');
+    setNumber('');
   };
 
   return (
